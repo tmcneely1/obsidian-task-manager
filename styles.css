@@ -1,0 +1,117 @@
+.task-manager-view {
+	padding: 0 8px 12px;
+}
+
+.task-manager-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	padding: 8px 0;
+	position: sticky;
+	top: 0;
+	background: var(--background-secondary);
+	z-index: 1;
+}
+
+.task-manager-tab {
+	padding: 3px 9px;
+	font-size: var(--font-ui-smaller);
+	border-radius: var(--radius-s);
+	background: transparent;
+	border: 1px solid transparent;
+	color: var(--text-muted);
+	cursor: pointer;
+	box-shadow: none;
+}
+
+.task-manager-tab:hover {
+	background: var(--background-modifier-hover);
+}
+
+.task-manager-tab.is-active {
+	background: var(--background-modifier-active-hover);
+	border-color: var(--background-modifier-border);
+	color: var(--text-normal);
+	font-weight: var(--font-semibold);
+}
+
+.task-manager-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.task-manager-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 6px 4px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+}
+
+.task-manager-row:hover {
+	background: var(--background-modifier-hover);
+}
+
+.task-manager-checkbox {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.task-manager-body {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.task-manager-text {
+	color: var(--text-normal);
+	line-height: 1.35;
+	overflow-wrap: anywhere;
+}
+
+.task-manager-text.is-complete {
+	color: var(--text-faint);
+	text-decoration: line-through;
+}
+
+.task-manager-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.task-manager-due.is-overdue {
+	color: var(--text-error);
+	font-weight: var(--font-semibold);
+}
+
+.task-manager-priority.is-high {
+	color: var(--text-error);
+}
+
+.task-manager-priority.is-medium {
+	color: var(--text-warning);
+}
+
+.task-manager-tag {
+	color: var(--text-accent);
+}
+
+.task-manager-path {
+	color: var(--text-faint);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%;
+}
+
+.task-manager-empty {
+	padding: 16px 4px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}

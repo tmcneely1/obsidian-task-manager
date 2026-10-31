@@ -1,44 +1,94 @@
-Obsidian Task Manager Plugin 
+# Task Manager
 
-[![Obsidian Plugin Audit](https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.obsidianpluginaudit.com%2Fbadge%2Fobsidian-task-manager%2Flatest.json%3Fversion%3D1.0.0&cacheSeconds=60)](https://obsidianpluginaudit.com/audit/obsidian-task-manager/latest)
+Local task management for Obsidian. Tasks live as ordinary markdown checkboxes in
+your own notes — there is no separate database, and nothing leaves your vault.
 
-![Obsidian Task Manager](./images/obsidian-task-manager-plugin.png)
+## Status
 
-<a href="https://buymeacoffee.com/antoneheyward">
-  <img src="images/bmc-button.png" alt="Alt Text" width="200">
-</a>
+Early foundation (v0.1.0). The parser, vault index and task list view are in place
+and working. This is deliberately a base to build on, not a finished app.
 
-Manage Tasks in Obsidian with ease and integrate with Google Calendar for full task and event management. Keep your tasks and events local and private, but sync them to your Google Calendar for notifications. Your tasks and events are synced in real-time.
+## Task syntax
 
-NOTE: I built this tool for my personal needs and it's 100% vibe coded. I am sharing the plugin with the community in hopes that it will be useful to others.
+Any markdown checkbox is a task. Metadata is optional and inline:
 
-If you love using Obsidian Task Manager Plugin, consider supporting the development by [Buying me a coffee](https://buymeacoffee.com/antoneheyward).
+```markdown
+- [ ] Draft the quarterly update 📅 2026-11-05 ⏫ #work
+- [/] Reading through the spec 🛫 2026-11-01
+- [x] Renew the domain
+- [-] Abandoned idea
+```
 
-You can also find me at [ProductiveMatters.com](https://productivematters.com)
+| Field | Syntax |
+| --- | --- |
+| Status | `[ ]` open, `[/]` in progress, `[x]` done, `[-]` cancelled |
+| Due date | `📅 2026-11-05`, or `[due:: 2026-11-05]` |
+| Start date | `🛫 2026-11-01`, or `[start:: …]` / `[scheduled:: …]` |
+| Priority | `🔺` `⏫` high, `🔼` medium, `🔽` `⏬` low |
+| Tags | `#tag`, including `#nested/tags` |
 
-## Installation
+Bullet (`-`, `*`, `+`) and numbered (`1.`, `1)`) list markers both work, at any
+indentation level.
 
-Step 1: Install BRAT
+## Views
 
-1. Open Obsidian and go to **Settings** > **Community plugins**.
-2. Click **Turn on community plugins** (and ensure **Restricted mode** is disabled).
-3. Click **Browse** and search for **"BRAT"**.
-4. Click **Install** and then **Enable**. 
+Open the task list from the ribbon or the **Open task list** command. It has five
+filters with live counts:
 
-Step 2: Install a Obsidian Task Manager Plugin
+- **Today** — due today or earlier, still open
+- **Overdue** — past due, still open
+- **Upcoming** — due in the next 7 days
+- **All** — everything open (completed tasks optional, see settings)
+- **Done** — completed and cancelled
 
-1. Get the GitHub repository URL: https://github.com/antoneheyward/obsidian-task-manager
-2. Go to Obsidian **Settings** and scroll down to the **BRAT** section in your sidebar.
-3. Click **Add Beta plugin**.
-4. Paste the copied GitHub link, select the latest version, and click **Add Plugin**.
-5. Go back to **Settings** > **Community plugins**, scroll down to find the newly installed plugin, and make sure it's **Toggled On**
-6. Watch this video if you need instruction on how to setup Google Calendar integration. [Configure integration with Google Calendar](https://youtu.be/BW2TJp9wV9k)
+Tasks sort by due date, then priority, then text. Clicking a row opens its file at
+the right line; clicking the checkbox writes the status back to the markdown.
 
-## Watch Demo
+## Commands
 
-[![Task Management in Obsidian](https://img.youtube.com/vi/qficoW5vVyw/maxresdefault.jpg)](https://youtu.be/qficoW5vVyw)
+| Command | What it does |
+| --- | --- |
+| Open task list | Reveals the task view in the right sidebar |
+| Toggle task on current line | Flips the checkbox under the cursor |
+| Insert task due today | Inserts `- [ ] 📅 <today>` |
+| Rebuild task index | Rescans the vault and reports the task count |
 
-[![Obsidian Task Manager - Public Release and New Updates!](https://img.youtube.com/vi/wkZi8BnoDZ0/maxresdefault.jpg)](https://youtu.be/wkZi8BnoDZ0)
+## Settings
+
+- **Folders to scan** — restrict indexing to specific folders (empty scans the vault)
+- **Folders to skip** — exclude folders and their subfolders
+- **Default view** — which filter the task list opens on
+- **Show completed tasks in All**
+
+## Install with BRAT
+
+1. Install and enable [BRAT](https://github.com/TfTHacker/obsidian42-brat) from Community plugins.
+2. In BRAT's settings, choose **Add beta plugin**.
+3. Enter `tmcneely1/obsidian-task-manager` and add the plugin.
+4. Enable **Task Manager** under Community plugins.
+
+## Development
+
+```bash
+npm install
+npm run dev    # watch build
+npm run build  # typecheck + production bundle
+```
+
+Releases are cut locally, since GitHub Actions does not run automatically on forks:
+
+```bash
+npm run build
+gh release create v0.1.0 main.js manifest.json styles.css
+```
 
 ## License
-All rights reserved. The software is provided as-is with no liabilities assumed.
+
+MIT — see [LICENSE](LICENSE).
+
+## Credits
+
+This repository began as a fork of
+[antoneheyward/obsidian-task-manager](https://github.com/antoneheyward/obsidian-task-manager),
+whose own source is not public. No code from that project is used here; this
+plugin is an independent implementation.
